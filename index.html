@@ -50,6 +50,22 @@
     /* Desktop tweaks */
     @media (max-width:980px){.container{grid-template-columns:1fr;}.rsvp-card{order:2}.invite-preview{order:1}}
     @media (prefers-reduced-motion:reduce){*{animation:none;transition:none!important}}
+
+    /* --- Invitation styles (inlined) --- */
+    .invitation-container{position:relative;width:100%;max-width:720px;height:auto;min-height:420px;margin:18px auto;cursor:pointer;transform-style:preserve-3d;box-shadow:0 20px 40px rgba(0,0,0,.08);outline:none;border-radius:12px}
+    .center-card{position:relative;width:100%;background:var(--paper-bg);color:var(--burgundy);text-align:center;padding:36px;box-sizing:border-box;border-radius:12px}
+    .invitation-container .names{font-family:'Alex Brush',cursive;font-size:2.4rem;margin:18px 0}
+    .invitation-container .details{font-size:1rem;line-height:1.5;margin-top:12px;color:#333}
+    .invitation-container .date{font-size:1.2rem;font-weight:600;letter-spacing:2px;margin:12px 0}
+    .invitation-container .parents-bestmen{display:flex;justify-content:space-between;margin-top:18px}
+    .invitation-container .flap{position:absolute;top:0;width:48%;height:100%;transform-style:preserve-3d;transition:transform 1.2s cubic-bezier(.25,1,.5,1);z-index:2}
+    .invitation-container .left-flap{left:0;transform-origin:left}
+    .invitation-container .right-flap{right:0;transform-origin:right}
+    .invitation-container .flap-front,.invitation-container .flap-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;background:var(--paper-bg);box-sizing:border-box;border:1px solid rgba(0,0,0,.03)}
+    .invitation-container .left-flap .flap-back{transform:rotateY(180deg);padding:24px;color:var(--burgundy);text-align:center;display:flex;flex-direction:column;justify-content:center}
+    .invitation-container .belly-band{position:relative;top:0;width:100%;height:60px;background:#fff;border-top:1px solid rgba(0,0,0,.06);border-bottom:1px solid rgba(0,0,0,.06);display:flex;justify-content:center;align-items:center;margin-top:12px}
+    .invitation-container.open .left-flap{transform:rotateY(-150deg)}
+    .invitation-container.open .right-flap{transform:rotateY(150deg)}
   </style>
 </head>
 <body>
@@ -147,7 +163,56 @@
   <!-- Full invitation embedded below -->
   <section id="invitation" style="padding:28px 0">
     <div style="max-width:760px;margin:0 auto">
-      <iframe src="/invitation.html" title="Πλήρες Προσκλητήριο" style="width:100%;height:860px;border:0;border-radius:12px;box-shadow:0 12px 30px rgba(0,0,0,.08);"></iframe>
+      <div class="invitation-container" id="fullInvite" tabindex="0" role="button" aria-pressed="false" aria-expanded="false">
+        <div class="center-card">
+          <div class="names">Χρήστος <br> & <br> Μαρία</div>
+          <div class="details">
+            Με ιδιαίτερη χαρά και τιμή<br>σας προσκαλούμε στον γάμο μας
+            <div class="date"><time datetime="2026-07-05">05 &middot; 07 &middot; 26</time></div>
+            Κυριακή και ώρα 6:00 το απόγευμα<br>
+            Ιερό Παρεκκλήσιο Αγίου Παϊσίου, Κτήμα Νότο<br>
+            Μαρίνου Αντύπα 50, Πυλαία
+          </div>
+          <div class="parents-bestmen">
+            <div>
+              <i>Οι γονείς</i><br>
+              Στέλιος & Χρύσα Πατσιατζή<br>
+              Χρήστος & Γλυκερία Γκουμά
+            </div>
+            <div>
+              <i>Θα κουμπαρέψουν</i><br>
+              Καλλιόπη Σατραζέμη<br>
+              Βασίλης Ρέππας
+            </div>
+          </div>
+        </div>
+
+        <div class="flap left-flap" aria-hidden="false">
+          <div class="flap-front"></div>
+          <div class="flap-back">
+            <div class="reception-title">Reception</div>
+            <div class="reception-text">Θα ακολουθήσει δεξίωση<br>εντός του κτήματος</div>
+            <hr>
+            <div class="reception-text">
+              Παρακαλούμε θερμά<br>επιβεβαιώστε την παρουσία σας<br>μέχρι τις 15 Ιουνίου<br>στο 6945 029 569
+            </div>
+            <hr>
+            <div class="reception-text">
+              Προαιρετική Λίστα Γάμου<br>
+              <b>GR28 0112 2200 0052 2010 8520 239</b>
+            </div>
+          </div>
+        </div>
+
+        <div class="flap right-flap" aria-hidden="false">
+          <div class="flap-front"></div>
+          <div class="flap-back"></div>
+        </div>
+
+        <div class="belly-band">
+          <div class="monogram">ΧΜ</div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -216,7 +281,19 @@
     // Small UX: focus first input on load
     window.addEventListener('load', ()=>{ document.getElementById('name').focus(); });
 
-    // No modal: invitation is embedded below (iframe)
+    // Full invitation interactivity (toggle flaps)
+    (function(){
+      const fullInvite = document.getElementById('fullInvite');
+      if(!fullInvite) return;
+      function toggle(){
+        fullInvite.classList.toggle('open');
+        const expanded = fullInvite.classList.contains('open');
+        fullInvite.setAttribute('aria-pressed', String(expanded));
+        fullInvite.setAttribute('aria-expanded', String(expanded));
+      }
+      fullInvite.addEventListener('click', toggle);
+      fullInvite.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') { e.preventDefault(); toggle(); } });
+    })();
   </script>
 </body>
 </html>
