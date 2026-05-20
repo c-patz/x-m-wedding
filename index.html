@@ -7,68 +7,94 @@
   <meta name="description" content="RSVP page for the wedding of Χρήστος & Μαρία. Respond and manage your RSVP.">
   <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    :root{--burgundy:#992b45;--cream:#f7f4f2;--muted:#7a6e6b;--paper-bg:repeating-linear-gradient(90deg,#fff,#fff 19px,#f4f4f4 20px)}
+    :root{--burgundy:#8c3347;--cream:#f7f4f2;--muted:#7a6e6b;--paper-bg:repeating-linear-gradient(90deg,#fff,#fff 19px,#f4f4f4 20px);--soft-border: #e2dcdb;}
     *{box-sizing:border-box}
     html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial}
-    body{display:flex;align-items:center;justify-content:center;padding:32px;background:linear-gradient(180deg,#fbfaf9 0%,#f3efee 100%)}
+    body{display:flex;align-items:center;justify-content:center;padding:32px;background:linear-gradient(180deg,#fbfaf9 0%,#f3efee 100%); position: relative;}
 
-    .container{width:min(980px,96vw);display:grid;grid-template-columns:1fr;gap:32px;align-items:start}
+    .floral-decoration {
+      position: fixed;
+      width: 200px;
+      height: auto;
+      z-index: 0;
+      opacity: 0.85;
+    }
+    .top-left { top: 15px; left: 15px; }
+    .top-right { top: 15px; right: 15px; transform: scaleX(-1); }
+    .bottom-left { bottom: 15px; left: 15px; transform: scaleY(-1); }
+    .bottom-right { bottom: 15px; right: 15px; transform: scale(-1, -1); }
 
-    /* Left: invitation preview */
-    .invite-preview{background:var(--paper-bg);padding:34px;border-radius:12px;box-shadow:0 12px 30px rgba(0,0,0,.08);border:1px solid rgba(0,0,0,.03)}
-    .inv-header{display:flex;align-items:center;gap:18px}
-    .badge{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#fff,#fff 40%,#f8f7f6);display:flex;align-items:center;justify-content:center;border:3px solid rgba(153,43,69,.08);box-shadow:0 6px 18px rgba(153,43,69,.06)}
-    .badge .mono{font-family:'Alex Brush',cursive;color:var(--burgundy);font-size:1.6rem}
-    .title{font-family:'Alex Brush',cursive;color:var(--burgundy);font-size:2.4rem;margin:0}
-    .subtitle{font-family:'Cormorant Garamond',serif;color:var(--muted);margin:6px 0 0}
-    .card-body{margin-top:18px;color:#2b2b2b}
-    .date{font-weight:600;color:var(--burgundy);margin:14px 0}
-    .meta{color:var(--muted);font-size:.95rem}
+    .container{width:min(980px,96vw);display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center; z-index: 1;}
 
-    /* Right: RSVP form */
-    .rsvp-card{background:linear-gradient(180deg,rgba(255,255,255,.9),#fff);padding:28px;border-radius:12px;box-shadow:0 18px 40px rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.04)}
-    .rsvp-card h2{margin:0 0 8px;font-family:'Alex Brush',cursive;color:var(--burgundy);font-size:1.9rem}
-    .rsvp-card p.lead{margin:0 0 18px;color:var(--muted)}
+    /* RSVP form */
+    .rsvp-card{background:rgba(255,255,255,0.6); backdrop-filter: blur(10px); padding:32px;border-radius:12px;box-shadow:0 18px 40px rgba(0,0,0,.05);border:1px solid rgba(255,255,255,0.8);}
+    .rsvp-card h2{margin:0 0 8px;font-family:'Alex Brush',cursive;color:var(--burgundy);font-size:2.2rem}
+    .rsvp-card p.lead{margin:0 0 24px;color:var(--muted)}
 
-    form .row{display:flex;gap:12px}
-    form label{display:block;font-size:.9rem;color:#333;margin-bottom:6px}
-    .field{margin-bottom:12px}
-    input[type=text],input[type=email],input[type=tel],select,textarea{width:100%;padding:10px 12px;border-radius:8px;border:1px solid #e6e2df;background:#fff;font-size:1rem}
+    form .row{display:flex;gap:16px}
+    form label{display:block;font-size:.9rem;color:#555;margin-bottom:6px}
+    .field{margin-bottom:16px}
+    
+    input[type=text],input[type=email],input[type=tel],select,textarea {
+      width:100%;
+      padding:10px 4px;
+      border:0;
+      border-bottom: 1px solid var(--soft-border);
+      background:transparent;
+      font-size:1rem;
+      font-family: 'Cormorant Garamond', serif;
+      color: #333;
+      transition: border-color .3s;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-bottom-color: var(--burgundy);
+    }
+    select { -webkit-appearance: none; -moz-appearance: none; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%237a6e6b' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 4px center; }
+
     textarea{min-height:86px;resize:vertical}
-    .radio-group{display:flex;gap:12px;align-items:center}
-    .radio-group input{margin-right:8px}
+    .radio-group{display:flex;gap:16px;align-items:center; padding-top: 8px;}
+    .radio-group input{margin-right:8px; accent-color: var(--burgundy);}
 
-    .actions{display:flex;gap:12px;align-items:center;margin-top:10px}
-    button.primary{background:var(--burgundy);color:#fff;padding:10px 16px;border-radius:10px;border:0;font-weight:600;cursor:pointer;box-shadow:0 8px 20px rgba(153,43,69,.14)}
+    .actions{display:flex;gap:12px;align-items:center;margin-top:24px}
+    button.primary{background:var(--burgundy);color:#fff;padding:12px 20px;border-radius:10px;border:0;font-weight:600;cursor:pointer;box-shadow:0 8px 20px rgba(140,51,71,.2); transition: transform .2s;}
+    button.primary:hover { transform: translateY(-2px); }
     button.ghost{background:transparent;border:1px solid rgba(0,0,0,.08);padding:8px 12px;border-radius:10px;cursor:pointer}
 
-    .note{font-size:.85rem;color:var(--muted);margin-top:6px}
+    .note{font-size:.85rem;color:var(--muted);margin-top:12px}
 
     /* Success */
     .toast{position:fixed;right:20px;bottom:20px;background:var(--burgundy);color:#fff;padding:12px 18px;border-radius:10px;box-shadow:0 8px 20px rgba(0,0,0,.15);display:none}
 
     /* Desktop tweaks */
-    @media (max-width:980px){.container{grid-template-columns:1fr;}.rsvp-card{order:2}.invite-preview{order:1}}
+    @media (max-width:980px){.container{grid-template-columns:1fr;}.rsvp-card{order:2}.invitation-container{order:1; margin-bottom: 32px;}}
     @media (prefers-reduced-motion:reduce){*{animation:none;transition:none!important}}
 
     /* --- Invitation styles (inlined) --- */
-    .invitation-container{position:relative;width:100%;max-width:720px;height:auto;min-height:420px;margin:18px auto;cursor:pointer;transform-style:preserve-3d;box-shadow:0 20px 40px rgba(0,0,0,.08);outline:none;border-radius:12px}
-    .center-card{position:relative;width:100%;background:var(--paper-bg);color:var(--burgundy);text-align:center;padding:36px;box-sizing:border-box;border-radius:12px}
-    .invitation-container .names{font-family:'Alex Brush',cursive;font-size:2.4rem;margin:18px 0}
-    .invitation-container .details{font-size:1rem;line-height:1.5;margin-top:12px;color:#333}
+    .invitation-container{position:relative;width:100%;max-width:500px; height:auto;min-height:420px;margin:0 auto;cursor:pointer;transform-style:preserve-3d;perspective: 1200px; outline:none;border-radius:12px}
+    .center-card{position:relative;width:100%;background:var(--paper-bg);color:var(--burgundy);text-align:center;padding:36px;box-sizing:border-box;border-radius:12px; box-shadow:0 20px 50px rgba(0,0,0,.1);}
+    .invitation-container .names{font-family:'Alex Brush',cursive;font-size:2.8rem;margin:18px 0}
+    .invitation-container .details{font-size:1rem;line-height:1.6;margin-top:12px;color:#333; font-family: 'Cormorant Garamond', serif;}
     .invitation-container .date{font-size:1.2rem;font-weight:600;letter-spacing:2px;margin:12px 0}
-    .invitation-container .parents-bestmen{display:flex;justify-content:space-between;margin-top:18px}
-    .invitation-container .flap{position:absolute;top:0;width:48%;height:100%;transform-style:preserve-3d;transition:transform 1.2s cubic-bezier(.25,1,.5,1);z-index:2}
+    .invitation-container .parents-bestmen{display:flex;justify-content:space-between;margin-top:24px; font-family: 'Cormorant Garamond', serif; font-style: italic;}
+    .invitation-container .flap{position:absolute;top:0;width:50%;height:100%;transform-style:preserve-3d;transition:transform 1.2s cubic-bezier(.25,1,.5,1);z-index:2}
     .invitation-container .left-flap{left:0;transform-origin:left}
     .invitation-container .right-flap{right:0;transform-origin:right}
-    .invitation-container .flap-front,.invitation-container .flap-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;background:var(--paper-bg);box-sizing:border-box;border:1px solid rgba(0,0,0,.03)}
-    .invitation-container .left-flap .flap-back{transform:rotateY(180deg);padding:24px;color:var(--burgundy);text-align:center;display:flex;flex-direction:column;justify-content:center}
-    .invitation-container .belly-band{position:relative;top:0;width:100%;height:60px;background:#fff;border-top:1px solid rgba(0,0,0,.06);border-bottom:1px solid rgba(0,0,0,.06);display:flex;justify-content:center;align-items:center;margin-top:12px}
-    .invitation-container.open .left-flap{transform:rotateY(-150deg)}
-    .invitation-container.open .right-flap{transform:rotateY(150deg)}
+    .invitation-container .flap-front,.invitation-container .flap-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;background:var(--paper-bg);box-sizing:border-box;border:1px solid rgba(0,0,0,.03); border-radius: 12px 0 0 12px;}
+    .invitation-container .right-flap .flap-front, .invitation-container .right-flap .flap-back { border-radius: 0 12px 12px 0; }
+    .invitation-container .left-flap .flap-back{transform:rotateY(180deg);padding:24px;color:var(--burgundy);text-align:center;display:flex;flex-direction:column;justify-content:center; font-family: 'Cormorant Garamond', serif;}
+    .invitation-container .belly-band{position:absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width:80px;height:80px;background:#fff;border-radius: 50%; display:flex;justify-content:center;align-items:center; z-index: 3; box-shadow: 0 0 0 5px #fff, 0 5px 20px rgba(0,0,0,.1); font-family:'Alex Brush',cursive; font-size: 2rem; color: var(--burgundy); transition: opacity .5s, transform .8s cubic-bezier(.25,1,.5,1);}
+    .invitation-container.open .left-flap{transform:rotateY(-160deg) scale(0.95); box-shadow: -10px 0 40px rgba(0,0,0,.15);}
+    .invitation-container.open .right-flap{transform:rotateY(160deg) scale(0.95); box-shadow: 10px 0 40px rgba(0,0,0,.15);}
+    .invitation-container.open .belly-band { opacity: 0; transform: translate(-50%, -50%) scale(1.5); }
   </style>
 </head>
 <body>
+  <img src="https://i.imgur.com/rGf2xR1.png" class="floral-decoration top-left" alt="">
+  <img src="https://i.imgur.com/rGf2xR1.png" class="floral-decoration top-right" alt="">
+  <img src="https://i.imgur.com/rGf2xR1.png" class="floral-decoration bottom-left" alt="">
+  <img src="https://i.imgur.com/rGf2xR1.png" class="floral-decoration bottom-right" alt="">
+
   <div class="container">
     <aside class="rsvp-card" aria-labelledby="rsvp-title">
       <h2 id="rsvp-title">Παρακαλώ απαντήστε (RSVP)</h2>
@@ -139,31 +165,10 @@
       </form>
     </aside>
 
-    <section class="invite-preview" aria-hidden="false">
-      <div class="inv-header">
-        <div class="badge"><div class="mono">ΧΜ</div></div>
-        <div>
-          <h3 class="title">Χρήστος &amp; Μαρία</h3>
-          <div class="subtitle">Σας προσκαλούμε να γιορτάσετε μαζί μας</div>
-        </div>
-      </div>
-
-      <div class="card-body">
-        <div class="date">05 &middot; 07 &middot; 26 — 18:00</div>
-        <div class="meta">Ιερό Παρεκκλήσιο Αγίου Παϊσίου, Κτήμα Νότο<br>Μαρίνου Αντύπα 50, Πυλαία</div>
-        <hr style="border:0;height:1px;background:rgba(153,43,69,.06);margin:18px 0">
-        <div class="meta">Παρακαλούμε επιβεβαιώστε την παρουσία σας μέσω της φόρμας παραπάνω.</div>
-      </div>
-    </section>
-    
-  </div>
-
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-  <!-- Full invitation embedded below -->
-  <section id="invitation" style="padding:28px 0">
-    <div style="max-width:760px;margin:0 auto">
+    <section id="invitation">
       <div class="invitation-container" id="fullInvite" tabindex="0" role="button" aria-pressed="false" aria-expanded="false">
+        <div class="belly-band">ΧΜ</div>
+        
         <div class="center-card">
           <div class="names">Χρήστος <br> & <br> Μαρία</div>
           <div class="details">
@@ -190,16 +195,16 @@
         <div class="flap left-flap" aria-hidden="false">
           <div class="flap-front"></div>
           <div class="flap-back">
-            <div class="reception-title">Reception</div>
-            <div class="reception-text">Θα ακολουθήσει δεξίωση<br>εντός του κτήματος</div>
-            <hr>
+            <div style="font-size: 1.4rem; font-family: 'Alex Brush', cursive;">Reception</div>
+            <div class="reception-text" style="margin-top: 12px;">Θα ακολουθήσει δεξίωση<br>εντός του κτήματος</div>
+            <hr style="border:0; height: 1px; background: rgba(140,51,71,.1); margin: 16px 24px;">
             <div class="reception-text">
-              Παρακαλούμε θερμά<br>επιβεβαιώστε την παρουσία σας<br>μέχρι τις 15 Ιουνίου<br>στο 6945 029 569
+              Παρακαλούμε θερμά<br>επιβεβαιώστε την παρουσία σας<br>μέχρι τις 15 Ιουνίου
             </div>
-            <hr>
-            <div class="reception-text">
+            <hr style="border:0; height: 1px; background: rgba(140,51,71,.1); margin: 16px 24px;">
+            <div class="reception-text" style="font-size: 0.8rem;">
               Προαιρετική Λίστα Γάμου<br>
-              <b>GR28 0112 2200 0052 2010 8520 239</b>
+              <b style="font-size: 0.9rem; letter-spacing: 0.5px;">GR28 0112 2200 0052 2010 8520 239</b>
             </div>
           </div>
         </div>
@@ -209,12 +214,12 @@
           <div class="flap-back"></div>
         </div>
 
-        <div class="belly-band">
-          <div class="monogram">ΧΜ</div>
-        </div>
       </div>
-    </div>
-  </section>
+    </section>
+    
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
     // Configuration: if you have a webhook URL (server) set it here to POST RSVPs
@@ -285,7 +290,10 @@
     (function(){
       const fullInvite = document.getElementById('fullInvite');
       if(!fullInvite) return;
-      function toggle(){
+      function toggle(e){
+        // Prevent toggling when interacting with form elements inside if clicking on them
+        if (e && e.target.closest('a, input, button')) return;
+        
         fullInvite.classList.toggle('open');
         const expanded = fullInvite.classList.contains('open');
         fullInvite.setAttribute('aria-pressed', String(expanded));

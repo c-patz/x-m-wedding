@@ -20,4 +20,7 @@ Files:
 
 - `index.html` — the invitation (accessible & responsive).
 
+- `index.html` — RSVP page (site root)
+- `invitation.html` — the original invitation (openable from the site)
+
 If you'd like, I can create a `gh-pages` branch and open a PR for automatic publishing.
