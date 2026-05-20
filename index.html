@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Προσκλητήριο Γάμου - Χρήστος & Μαρία</title>
+  <meta name="description" content="Προσκλητήριο γάμου Χρήστος & Μαρία — ψηφιακή πρόσκληση με εφέ ανοίγματος.">
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root{--burgundy:#992b45;--paper-bg:repeating-linear-gradient(to right,#fff,#fff 19px,#f4f4f4 20px)}
+    html,body{height:100%;margin:0}
+    body{display:flex;align-items:center;justify-content:center;background-color:#d9d4cf;font-family:'Cormorant Garamond',serif;overflow:hidden}
+    .invitation-container{position:relative;width:min(90vw,450px);height:min(95vh,600px);cursor:pointer;transform-style:preserve-3d;box-shadow:0 20px 40px rgba(0,0,0,.3);outline:none}
+    .center-card{position:absolute;width:100%;height:100%;background:var(--paper-bg);color:var(--burgundy);text-align:center;padding:40px;box-sizing:border-box;z-index:1}
+    .names{font-family:'Alex Brush',cursive;font-size:clamp(2rem,6vw,3.5rem);margin:30px 0 10px;line-height:1}
+    .details{font-size:clamp(.95rem,2.4vw,1.1rem);line-height:1.6;margin-top:20px}
+    .date{font-size:clamp(1.2rem,3.6vw,1.8rem);font-weight:600;letter-spacing:3px;margin:15px 0}
+    .parents-bestmen{font-size:.95rem;margin-top:30px;display:flex;justify-content:space-between;gap:16px}
+    .flap{position:absolute;top:0;width:50%;height:100%;transform-style:preserve-3d;transition:transform 1.2s cubic-bezier(.25,1,.5,1);z-index:2}
+    .left-flap{left:0;transform-origin:left}
+    .right-flap{right:0;transform-origin:right}
+    .flap-front,.flap-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;background:var(--paper-bg);box-sizing:border-box;border:1px solid rgba(0,0,0,.03)}
+    .flap-front{display:flex;align-items:center;justify-content:center}
+    .left-flap .flap-back{transform:rotateY(180deg);padding:30px;color:var(--burgundy);text-align:center;display:flex;flex-direction:column;justify-content:center}
+    .right-flap .flap-back{transform:rotateY(180deg)}
+    .belly-band{position:absolute;top:45%;width:100%;height:80px;background:#fff;border-top:1px solid rgba(0,0,0,.1);border-bottom:1px solid rgba(0,0,0,.1);z-index:3;display:flex;justify-content:center;align-items:center;transition:opacity .5s ease;pointer-events:none}
+    .monogram{font-family:'Alex Brush',cursive;font-size:3rem;color:var(--burgundy)}
+    .invitation-container.open .left-flap{transform:rotateY(-150deg);box-shadow:10px 0 20px rgba(0,0,0,.1)}
+    .invitation-container.open .right-flap{transform:rotateY(150deg);box-shadow:-10px 0 20px rgba(0,0,0,.1)}
+    .invitation-container.open .belly-band{opacity:0}
+    .reception-title{font-family:'Alex Brush',cursive;font-size:clamp(1.2rem,4vw,2.5rem);margin-bottom:10px}
+    .reception-text{font-size:.9rem;margin-bottom:15px}
+    hr{border:0;height:1px;background-color:var(--burgundy);width:50%;margin:15px auto;opacity:.5}
+    @media (prefers-reduced-motion:reduce){.flap{transition:none!important}.invitation-container{perspective:none}}
+    @media (max-width:520px){.parents-bestmen{flex-direction:column;align-items:center;text-align:center}}
+  </style>
+</head>
+<body>
+  <main>
+    <div class="invitation-container" id="invite" tabindex="0" role="button" aria-pressed="false" aria-expanded="false" aria-label="Άνοιγμα προσκλητηρίου" onclick="toggleInvitation()">
+      <div class="center-card">
+        <h1 class="names">Χρήστος <br> & <br> Μαρία</h1>
+        <div class="details">
+          Με ιδιαίτερη χαρά και τιμή<br>σας προσκαλούμε στον γάμο μας
+          <div class="date"><time datetime="2026-07-05">05 &middot; 07 &middot; 26</time></div>
+          Κυριακή και ώρα 6:00 το απόγευμα<br>
+          Ιερό Παρεκκλήσιο Αγίου Παϊσίου, Κτήμα Νότο<br>
+          Μαρίνου Αντύπα 50, Πυλαία
+        </div>
+        <div class="parents-bestmen">
+          <div>
+            <i>Οι γονείς</i><br>
+            Στέλιος & Χρύσα Πατσιατζή<br>
+            Χρήστος & Γλυκερία Γκουμά
+          </div>
+          <div>
+            <i>Θα κουμπαρέψουν</i><br>
+            Καλλιόπη Σατραζέμη<br>
+            Βασίλης Ρέππας
+          </div>
+        </div>
+      </div>
+
+      <div class="flap left-flap" aria-hidden="false">
+        <div class="flap-front"></div>
+        <div class="flap-back">
+          <div class="reception-title">Reception</div>
+          <div class="reception-text">Θα ακολουθήσει δεξίωση<br>εντός του κτήματος</div>
+          <hr>
+          <div class="reception-text">
+            Παρακαλούμε θερμά<br>επιβεβαιώστε την παρουσία σας<br>μέχρι τις 15 Ιουνίου<br>στο 6945 029 569
+          </div>
+          <hr>
+          <div class="reception-text">
+            Προαιρετική Λίστα Γάμου<br>
+            <b>GR28 0112 2200 0052 2010 8520 239</b>
+          </div>
+        </div>
+      </div>
+
+      <div class="flap right-flap" aria-hidden="false">
+        <div class="flap-front"></div>
+        <div class="flap-back"></div>
+      </div>
+
+      <div class="belly-band">
+        <div class="monogram">ΧΜ</div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const invite = document.getElementById('invite');
+    function toggleInvitation(){
+      invite.classList.toggle('open');
+      const expanded = invite.classList.contains('open');
+      invite.setAttribute('aria-pressed', String(expanded));
+      invite.setAttribute('aria-expanded', String(expanded));
+    }
+    invite.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleInvitation(); }
+    });
+  </script>
+</body>
+</html>
